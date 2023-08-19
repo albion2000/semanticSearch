@@ -44,13 +44,13 @@ EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"
 # Select the Model ID and model_basename
 # load the LLM for generating Natural Language responses
 
-MODEL_ID = "TheBloke/Llama-2-7B-Chat-GGML"
-MODEL_BASENAME = "llama-2-7b-chat.ggmlv3.q4_0.bin"
+# MODEL_ID = "TheBloke/Llama-2-7B-Chat-GGML"
+# MODEL_BASENAME = "llama-2-7b-chat.ggmlv3.q4_0.bin"
 
 # for HF models
 # MODEL_ID = "TheBloke/vicuna-7B-1.1-HF"
-# MODEL_BASENAME = None
 # MODEL_ID = "TheBloke/Wizard-Vicuna-7B-Uncensored-HF"
+# MODEL_BASENAME = None
 # MODEL_ID = "TheBloke/guanaco-7B-HF"
 # MODEL_ID = 'NousResearch/Nous-Hermes-13b' # Requires ~ 23GB VRAM. Using STransformers
 # alongside will 100% create OOM on 24GB cards.
@@ -72,7 +72,7 @@ MODEL_BASENAME = "llama-2-7b-chat.ggmlv3.q4_0.bin"
 # MODEL_BASENAME = "wizard-vicuna-13B.ggmlv3.q4_0.bin"
 # MODEL_BASENAME = "wizard-vicuna-13B.ggmlv3.q6_K.bin"
 # MODEL_BASENAME = "wizard-vicuna-13B.ggmlv3.q2_K.bin"
-# MODEL_ID = "TheBloke/orca_mini_3B-GGML"
-# MODEL_BASENAME = "orca-mini-3b.ggmlv3.q4_0.bin"
+MODEL_ID = "TheBloke/orca_mini_3B-GGML"
+MODEL_BASENAME = "orca-mini-3b.ggmlv3.q4_0.bin"
 
 

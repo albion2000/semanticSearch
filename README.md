@@ -1,6 +1,24 @@
-# localGPT
+# semanticSearch
 
-This project was inspired by the original [privateGPT](https://github.com/imartinez/privateGPT). Most of the description here is inspired by the original privateGPT.
+This is a fork of localGPT, a project inspired by the original [privateGPT](https://github.com/imartinez/privateGPT). Most of the description here is inspired by the original privateGPT.
+
+The LLM part was stripped off in order to just keep the semantic search part of interest in itself.
+
+I have removed the dependencies not needed anymore (llm)
+
+Now using just the HuggingFaceInstructEmbeddings. 
+
+The ingest can only be done offline (removed the upload button functionnality), by using ingest.py
+
+A stripped off version of the installation requirements is provided : requirements_for_search.txt  it should be enough.
+
+So, there are now only 2 things to do after installation.
+
+python ingest.py --device_type cpu
+
+then follow "Run the UI" below, from step 3 to be able to search in your documents from a brower.
+
+I left the text below unchanged
 
 For detailed overview of the project, Watch these videos
 - [Detailed code-walkthrough](https://youtu.be/MlyoObdIHyo).
