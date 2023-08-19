@@ -16,7 +16,7 @@ So, there are now only 2 things to do after installation.
 
 python ingest.py --device_type cpu
 
-then follow "Run the UI" below, from step 3 to be able to search in your documents from a brower.
+then follow "Run the UI" below, from step 2 to be able to search in your documents from a brower.
 
 I left the text below unchanged
 
@@ -185,7 +185,7 @@ CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip install -U llama-cpp-python --no
    MODEL_BASENAME = "llama-2-7b-chat.ggmlv3.q4_0.bin"
    ```
 
-3. Open up a terminal and activate your python environment that contains the dependencies installed from requirements.txt.
+2. Open up a terminal and activate your python environment that contains the dependencies installed from requirements.txt.
 
 4. Navigate to the `/LOCALGPT` directory.
 
