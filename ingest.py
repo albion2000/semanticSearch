@@ -6,17 +6,22 @@ import click
 import torch
 from langchain.docstore.document import Document
 from langchain.embeddings import HuggingFaceInstructEmbeddings
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import Language, RecursiveCharacterTextSplitter
 from langchain.vectorstores import Chroma
+
+from sentence_transformers import SentenceTransformer
 
 from constants import (
     CHROMA_SETTINGS,
     DOCUMENT_MAP,
     EMBEDDING_MODEL_NAME,
+    EMBEDDING_MODEL_TYPE,
     INGEST_THREADS,
     PERSIST_DIRECTORY,
     SOURCE_DIRECTORY,
 )
+
 
 
 def load_single_document(file_path: str) -> Document:
@@ -86,6 +91,20 @@ def split_documents(documents: list[Document]) -> tuple[list[Document], list[Doc
 
     return text_docs, python_docs
 
+class ST_with_ed(SentenceTransformer):
+    def __init__(self, model_name):
+        super().__init__(model_name)
+    def embed_documents(settings,docs):
+        out = []
+        for setting in settings:
+            print(setting)
+        for doc in docs:
+            print(doc)
+            print("*****")
+#        for doc in docs:
+#            out.append(super().encode(doc))
+        return super().encode(docs)
+        
 
 @click.command()
 @click.option(
@@ -116,6 +135,9 @@ def split_documents(documents: list[Document]) -> tuple[list[Document], list[Doc
     ),
     help="Device to run on. (Default is cuda)",
 )
+
+
+
 def main(device_type):
     # Load documents and split in chunks
     logging.info(f"Loading documents from {SOURCE_DIRECTORY}")
@@ -130,17 +152,25 @@ def main(device_type):
     logging.info(f"Loaded {len(documents)} documents from {SOURCE_DIRECTORY}")
     logging.info(f"Split into {len(texts)} chunks of text")
 
-    # Create embeddings
-    embeddings = HuggingFaceInstructEmbeddings(
-        model_name=EMBEDDING_MODEL_NAME,
-        model_kwargs={"device": device_type},
-    )
-    # change the embedding type here if you are running into issues.
-    # These are much smaller embeddings and will work for most appications
-    # If you use HuggingFaceEmbeddings, make sure to also use the same in the
-    # run_localGPT.py file.
 
-    # embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+    # Create embeddings
+    if (EMBEDDING_MODEL_TYPE == "HuggingFaceInstructEmbeddings"):
+        embeddings = HuggingFaceInstructEmbeddings(model_name=EMBEDDING_MODEL_NAME,model_kwargs={"device": device_type})
+	    # change the embedding type here if you are running into issues.
+	    # These are much smaller embeddings and will work for most appications
+	    # If you use HuggingFaceEmbeddings, make sure to also use the same in the
+	    # run_localGPT.py file.
+    elif (EMBEDDING_MODEL_TYPE == "HuggingFaceEmbeddings"):
+        embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+    elif (EMBEDDING_MODEL_TYPE == "CamembertEmbeddings"):
+#        embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME) 
+        embeddings = ST_with_ed(model_name=EMBEDDING_MODEL_NAME)
+        embeddings.max_seq_length=512
+    else:
+        print("undefined or unexpected EMBEDDING_MODEL_TYPE")
+        return
+
+# https://api.python.langchain.com/en/latest/vectorstores/langchain.vectorstores.chroma.Chroma.html    fucking hard to find
 
     db = Chroma.from_documents(
         texts,
@@ -150,6 +180,8 @@ def main(device_type):
     )
     db.persist()
     db = None
+    # BELL  
+    print('\a')
 
 
 if __name__ == "__main__":

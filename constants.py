@@ -35,13 +35,33 @@ DOCUMENT_MAP = {
     ".doc": Docx2txtLoader,
 }
 
-# Default Instructor Model
-EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"
-# You can also choose a smaller model, don't forget to change HuggingFaceInstructEmbeddings
-# to HuggingFaceEmbeddings in both ingest.py and run_localGPT.py
+# French model
+EMBEDDING_MODEL_TYPE = "CamembertEmbeddings"
+EMBEDDING_MODEL_NAME = "dangvantuan/sentence-camembert-large"
+
+# HuggingFaceEmbeddings
+#EMBEDDING_MODEL_NAME = "dangvantuan/sentence-camembert-base"
+#EMBEDDING_MODEL_TYPE = "HuggingFaceEmbeddings"
+#EMBEDDING_MODEL_NAME = "inokufu/flaubert-base-uncased-xnli-sts" # aucun résultat
+#EMBEDDING_MODEL_NAME = "Sahajtomar/french_semantic" # très faible
+#EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-large"  # encore assez faible
+#EMBEDDING_MODEL_NAME = "sentence-transformers/distiluse-base-multilingual-cased-v2"
+#EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+#EMBEDDING_MODEL_NAME = "shibing624/text2vec-base-multilingual"
+#EMBEDDING_MODEL_NAME = "sentence-transformers/clip-ViT-B-32-multilingual-v1"
+#EMBEDDING_MODEL_NAME = "distilbert-base-uncased-finetuned-sst-2-english"
+#EMBEDDING_MODEL_NAME = "dangvantuan/sentence-camembert-large"  # there is a loading issue with that model
+# Smaller funtionnal HuggingFaceEmbeddings model
 # EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
 
-# Select the Model ID and model_basename
+
+# HuggingFaceInstructEmbeddings  (Really good for english)
+# EMBEDDING_MODEL_TYPE = "HuggingFaceInstructEmbeddings"
+# EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"
+
+
+
+# Select the Model ID and model_basename for the LLM
 # load the LLM for generating Natural Language responses
 
 # MODEL_ID = "TheBloke/Llama-2-7B-Chat-GGML"

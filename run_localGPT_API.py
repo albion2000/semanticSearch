@@ -8,8 +8,8 @@ import torch
 from flask import Flask, jsonify, request
 from langchain.chains import RetrievalQA
 from langchain.embeddings import HuggingFaceInstructEmbeddings
+from langchain.embeddings import HuggingFaceEmbeddings
 
-# from langchain.embeddings import HuggingFaceEmbeddings
 #from langchain.llms import HuggingFacePipeline
 #from run_localGPT import load_model
 
@@ -26,7 +26,7 @@ from langchain.vectorstores import Chroma
 
 from werkzeug.utils import secure_filename
 
-from constants import CHROMA_SETTINGS, EMBEDDING_MODEL_NAME, PERSIST_DIRECTORY
+from constants import CHROMA_SETTINGS, EMBEDDING_MODEL_NAME, EMBEDDING_MODEL_TYPE, PERSIST_DIRECTORY
 #, MODEL_ID, MODEL_BASENAME
 
 DEVICE_TYPE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -34,10 +34,18 @@ SHOW_SOURCES = True
 logging.info(f"Running on: {DEVICE_TYPE}")
 logging.info(f"Display Source Documents set to: {SHOW_SOURCES}")
 
-EMBEDDINGS = HuggingFaceInstructEmbeddings(model_name=EMBEDDING_MODEL_NAME, model_kwargs={"device": DEVICE_TYPE})
-
-# uncomment the following line if you used HuggingFaceEmbeddings in the ingest.py
-# EMBEDDINGS = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+if (EMBEDDING_MODEL_TYPE == "HuggingFaceInstructEmbeddings"):
+    EMBEDDINGS = HuggingFaceInstructEmbeddings(model_name=EMBEDDING_MODEL_NAME, model_kwargs={"device": DEVICE_TYPE})
+    print("Model "+EMBEDDING_MODEL_NAME+" loaded")
+elif (EMBEDDING_MODEL_TYPE == "HuggingFaceEmbeddings"):
+    EMBEDDINGS = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+    print("Model "+EMBEDDING_MODEL_NAME+" loaded")
+elif (EMBEDDING_MODEL_TYPE == "CamembertEmbeddings"):
+    EMBEDDINGS = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+    print("Model "+EMBEDDING_MODEL_NAME+" loaded")
+else:
+    print("Unexpected or undefined embeddings model type")
+    exit(0)
 #if os.path.exists(PERSIST_DIRECTORY):
 #    try:
 #        shutil.rmtree(PERSIST_DIRECTORY)
@@ -64,9 +72,11 @@ DB = Chroma(
     client_settings=CHROMA_SETTINGS,
 )
 
+print("Database loaded")
+
 # similarity search is the default, k=4 results is the default
 #RETRIEVER = DB.as_retriever(search_type="similarity_score_threshold", search_kwargs={'k': 10, 'score_threshold': 0.3})
-RETRIEVER = DB.as_retriever(search_type="mmr", search_kwargs={'k': 20})
+RETRIEVER = DB.as_retriever(search_type="mmr", search_kwargs={'k': 60, 'fetch_k':60})
 
 #LLM = load_model(device_type=DEVICE_TYPE, model_id=MODEL_ID, model_basename=MODEL_BASENAME)
 

@@ -9,6 +9,13 @@ from werkzeug.utils import secure_filename
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
+# https://flask.palletsprojects.com/en/2.3.x/server/
+# https://flask.palletsprojects.com/en/2.3.x/deploying/
+# https://www.plesk.com/
+# https://www.anakeyn.com/2020/12/27/installer-python-en-wsgi-sur-vps-ovhcloud-plesk/
+# https://www.creatux.fr/blog/deployer-une-application-flask-sur-un-vps-ubuntu-de-chez-ovh
+# https://www.askpython.com/python-modules/flask/deploy-flask-app-on-vps
+
 app = Flask(__name__)
 app.secret_key = "LeafmanZSecretKey"
 
