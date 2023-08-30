@@ -19,7 +19,8 @@ INGEST_THREADS = os.cpu_count() or 8
 
 # Define the Chroma settings
 CHROMA_SETTINGS = Settings(
-    chroma_db_impl="duckdb+parquet", persist_directory=PERSIST_DIRECTORY, anonymized_telemetry=False
+    chroma_db_impl="duckdb+parquet", persist_directory=PERSIST_DIRECTORY, anonymized_telemetry=False, 
+    #is_persistent=True,
 )
 
 # https://python.langchain.com/en/latest/_modules/langchain/document_loaders/excel.html#UnstructuredExcelLoader
@@ -34,6 +35,10 @@ DOCUMENT_MAP = {
     ".docx": Docx2txtLoader,
     ".doc": Docx2txtLoader,
 }
+
+# HuggingFaceInstructEmbeddings  (Really good for english. xl is supposed to be even better)
+# EMBEDDING_MODEL_TYPE = "HuggingFaceInstructEmbeddings"
+# EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"
 
 # French model
 EMBEDDING_MODEL_TYPE = "CamembertEmbeddings"
@@ -54,10 +59,6 @@ EMBEDDING_MODEL_NAME = "dangvantuan/sentence-camembert-large"
 # Smaller funtionnal HuggingFaceEmbeddings model
 # EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
 
-
-# HuggingFaceInstructEmbeddings  (Really good for english)
-# EMBEDDING_MODEL_TYPE = "HuggingFaceInstructEmbeddings"
-# EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"
 
 
 

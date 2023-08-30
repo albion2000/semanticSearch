@@ -95,14 +95,15 @@ class ST_with_ed(SentenceTransformer):
     def __init__(self, model_name):
         super().__init__(model_name)
     def embed_documents(settings,docs):
-        out = []
         for setting in settings:
             print(setting)
-        for doc in docs:
-            print(doc)
-            print("*****")
+#        out = []
+#        for doc in docs:
+#            print(doc)
+#            print("*")
 #        for doc in docs:
 #            out.append(super().encode(doc))
+#        return out
         return super().encode(docs)
         
 

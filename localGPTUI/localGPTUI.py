@@ -16,6 +16,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 # https://www.creatux.fr/blog/deployer-une-application-flask-sur-un-vps-ubuntu-de-chez-ovh
 # https://www.askpython.com/python-modules/flask/deploy-flask-app-on-vps
 
+PageTitle = "Lumières dans la nuit : Recherche Sémantique"
+SearchboxTitle = "Lumières dans la Nuit Recherche Sémantique"
+SearchboxBgd = "Ecrivez un résumé de ce que vous voulez trouver"
+
 app = Flask(__name__)
 app.secret_key = "LeafmanZSecretKey"
 
@@ -33,7 +37,7 @@ def home_page():
             print(response.status_code)  # print HTTP response status code for debugging
             if response.status_code == 200:
                 # print(response.json())  # Print the JSON data from the response
-                return render_template("home.html", show_response_modal=True, response_dict=response.json())
+                return render_template("home.html", show_response_modal=True, response_dict=response.json(), page_title=PageTitle, searchbox_title = SearchboxTitle, searchbox_bgd = SearchboxBgd)
         elif "documents" in request.files:
             delete_source_url = "http://localhost:5110/api/delete_source"  # URL of the /api/delete_source endpoint
             if request.form.get("action") == "reset":
@@ -59,6 +63,7 @@ def home_page():
         "home.html",
         show_response_modal=False,
         response_dict={"Prompt": "None", "Answer": "None", "Sources": [("ewf", "wef")]},
+        page_title=PageTitle, searchbox_title = SearchboxTitle, searchbox_bgd = SearchboxBgd,
     )
 
 
