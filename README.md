@@ -4,6 +4,8 @@ This is a fork of localGPT, a project inspired by the original [privateGPT](http
 
 The LLM part was stripped off in order to just keep the semantic search part of interest in itself.
 
+I renamed it semanticSearch.
+
 I have removed the dependencies not needed anymore (llm)
 
 Now using just the HuggingFaceInstructEmbeddings. 
@@ -33,23 +35,41 @@ Built with [LangChain](https://github.com/hwchase17/langchain) and [Vicuna-7B](h
 
 # Environment Setup
 
-Install conda
+Install anaconda (https://www.anaconda.com/download), 
+Have an installation of visual studio 2019-2023 compile tools (check the For Windows 10/11 requirements chapter below)
+
+then in a shell opened using the base(root) environment, do...
+
+Create a dedicated clean anaconda environment
 
 ```shell
-conda create -n localGPT
+conda create -n semanticSearch
 ```
 
 Activate
 
 ```shell
-conda activate localGPT
+conda activate semanticSearch
 ```
 
 In order to set your environment up to run the code here, first install all requirements:
 
+These ones are what's needed just for search for many models
+```shell
+pip install -r requirements_for_search.txt 
+
+```
+
+You don't need to proceed further, you install is complete.
+
+
+These ones are needed if LLM are used (not used in this fork anymore)
 ```shell
 pip install -r requirements.txt
 ```
+
+
+Next time you start anaconda, that new environment will exist. use it. 
 
 
 If you want to use BLAS or Metal with [llama-cpp](<(https://github.com/abetlen/llama-cpp-python#installation-with-openblas--cublas--clblast--metal)>) you can set appropriate flags:
@@ -187,7 +207,7 @@ CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip install -U llama-cpp-python --no
 
 2. Open up a terminal and activate your python environment that contains the dependencies installed from requirements.txt.
 
-4. Navigate to the `/LOCALGPT` directory.
+4. Navigate to the `/semanticSearch` directory.
 
 5. Run the following command `python run_localGPT_API.py`. The API should being to run.
 
@@ -195,7 +215,7 @@ CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip install -U llama-cpp-python --no
 
 7. Open up a second terminal and activate the same python environment.
 
-8. Navigate to the `/LOCALGPT/localGPTUI` directory.
+8. Navigate to the `/semanticSearch/localGPTUI` directory.
 
 9. Run the command `python localGPTUI.py`.
 
